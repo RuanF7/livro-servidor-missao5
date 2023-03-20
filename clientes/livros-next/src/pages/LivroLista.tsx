@@ -25,7 +25,7 @@ export default function LivroLista() {
   const [meusLivros, setMeusLivros] = useState<Livro[]>([
     {
       codigo: 1,
-      editora: 1,
+      codEditora: 1,
       titulo: "Inserir dados",
       resumo: "Inserir dados",
       autores: ["Inserir dados"],
