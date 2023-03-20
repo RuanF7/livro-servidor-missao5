@@ -14,13 +14,11 @@ type Props = {
   livros: ControleLivro;
 };
 
+const controleLivros = new ControleLivro();
 
 const LinhaLivro = ({ livro, prateleira, carregar }: LinhaLivroProps) => {
   const editoras = new ControleEditora();
 
-/*
-  Página de catalogo de livros com botão excluir
-*/
 
   return (
     <>
@@ -31,7 +29,7 @@ const LinhaLivro = ({ livro, prateleira, carregar }: LinhaLivroProps) => {
             type="button"
             className="btn btn-danger btn-sm"
             onClick={() => {
-              prateleira.excluir(livro.codigo);
+              controleLivros.excluir(livro._id);
               carregar(true);
             }}
           >
@@ -57,13 +55,28 @@ const LinhaLivro = ({ livro, prateleira, carregar }: LinhaLivroProps) => {
 };
 
 export default function LivroLista({ livros }: Props) {
-  const [livrosArmazenados, setLivrosArmazenados] = useState<Livro[]>(livros.obterLivros());
+  const [prateleiraLivros, setPrateleiraLivros] = useState<Livro[]>([
+    {
+      _id: 1,
+      codEditora: 1,
+      titulo: "Não cadaastrado!",
+      resumo: "Não cadaastrado!",
+      autores: ["Não cadaastrado!"],
+    },
+  ]);  
+  
   const [carregar, setCarregar] = useState<boolean>(false);
 
+
+  async function obter() {
+    const retorno = await controleLivros.obterLivros();
+    setPrateleiraLivros(retorno.prateleira);
+  }
+
   useEffect(() => {
-    setLivrosArmazenados(livros.obterLivros());
+    obter();
     setCarregar(false);
-  }, [carregar, livros]);
+  }, [carregar]);
   
   return (
     <main className="container">
@@ -78,7 +91,7 @@ export default function LivroLista({ livros }: Props) {
           </tr>
         </thead>
         <tbody>
-          {livrosArmazenados.map((livro, index) => {
+          {prateleiraLivros.map((livro, index) => {
             return (<LinhaLivro key={index} livro={livro} prateleira={livros} carregar={setCarregar} />
             );
           })}

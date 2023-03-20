@@ -3,7 +3,7 @@ Modelo de livros, com tipos number para codigo e editora, e string para resumo, 
 */
 export class Livro {
   
-  codigo: number;
+  _id: number;
   codEditora: number;
   titulo: string;
   resumo: string;
@@ -18,7 +18,7 @@ export class Livro {
 
 
   ) {
-    this.codigo = codigo;
+    this._id = codigo;
     this.codEditora = codEditora;
     this.titulo = titulo;
     this.resumo = resumo;
