@@ -24,7 +24,8 @@ export default function LinhaLivro({ livro, excluir }: LinhaLivroProps) {
     });
 
     const controleEditora: Editora[] = await dados.json();
-    const retorno = controleEditora.find(valor => valor.codEditora === livro.editora)
+    const retorno = editoras.find(valor => valor.codEditora === livro.codEditora)
+    console.log(livro.codEditora)
 
     setEditora(retorno != undefined ? retorno.nome : "Sem cadastro");
   }
